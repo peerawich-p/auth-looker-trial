@@ -1,6 +1,6 @@
 view: fact_store_sales {
 
-  sql_table_name: fact_store_sales ;;
+  sql_table_name: poc-data-engineer-learn.cdp.fact_store_sales ;;
 
   # derived_table: {
   #   sql: SELECT
