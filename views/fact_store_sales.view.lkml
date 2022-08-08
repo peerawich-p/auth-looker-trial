@@ -22,7 +22,7 @@ view: fact_store_sales {
 
   measure: purchase_value_after_tax_freight {
     label: "PURCHASE_VALUE_AFTER_TAX_FREIGHT"
-    type: number
+    type: sum
     sql: ${TABLE}.PURCHASE_VALUE_AFTER_TAX_FREIGHT ;;
   }
 
