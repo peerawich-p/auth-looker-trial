@@ -1,11 +1,13 @@
 view: fact_store_sales {
 
-  derived_table: {
-    sql: SELECT
-        *
-      FROM CDP.FACT_STORE_SALES
-      ;;
-  }
+  sql_table_name: cdp.fact_store_sales ;;
+
+  # derived_table: {
+  #   sql: SELECT
+  #       *
+  #     FROM CDP.FACT_STORE_SALES
+  #     ;;
+  # }
 
   dimension: date_cd {
     label: "DATE_CD"
