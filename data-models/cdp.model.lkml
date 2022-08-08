@@ -9,6 +9,7 @@ include: "/**/*.view.lkml"                 # include all views in this project
 #
 
 explore: fact_store_sales {
+  label: "FACT_STORE_SALES"
   join: dim_date {
     relationship: many_to_one
     sql_on: ${fact_store_sales.date_cd} = ${fact_store_sales.date_cd} ;;
