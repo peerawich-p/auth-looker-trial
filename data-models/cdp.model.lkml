@@ -7,6 +7,14 @@ include: "/**/*.view.lkml"                 # include all views in this project
 # # Select the views that should be a part of this model,
 # # and define the joins that connect them together.
 #
+
+explore: fact_store_sales {
+  join: dim_date {
+    relationship: many_to_one
+    sql_on: ${fact_store_sales.date_cd} = ${fact_store_sales.date_cd} ;;
+  }
+}
+
 # explore: order_items {
 #   join: orders {
 #     relationship: many_to_one

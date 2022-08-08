@@ -49,6 +49,11 @@ view: dim_date {
       ;;
   }
 
+  dimension: date_cd {
+    label: "DATE_CD"
+    type: number
+    sql: ${TABLE}.DATE_CD ;;
+  }
 
 #
 #   # Define your dimensions and measures here, like this:
