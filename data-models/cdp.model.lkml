@@ -12,7 +12,12 @@ explore: fact_store_sales {
   label: "FACT_STORE_SALES"
   join: dim_date {
     relationship: many_to_one
-    sql_on: ${fact_store_sales.date_cd} = ${fact_store_sales.date_cd} ;;
+    sql_on: ${fact_store_sales.date_cd} = ${dim_date.date_cd} ;;
+  }
+
+  join: dim_store {
+    relationship: many_to_one
+    sql_on: ${fact_store_sales.store_cd} = ${dim_store.store_cd} ;;
   }
 }
 

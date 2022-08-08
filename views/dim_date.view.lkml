@@ -1,14 +1,10 @@
 view: dim_date {
 
-  derived_table: {
-    sql: SELECT
-        *
-      FROM CDP.DIM_DATE
-      ;;
-  }
+  sql_table_name: CDP.DIM_DATE ;;
 
   dimension: date_cd {
     label: "DATE_CD"
+    primary_key: yes
     type: date_time
     sql: ${TABLE}.DATE_CD ;;
   }

@@ -8,7 +8,6 @@ view: fact_store_sales {
   #     FROM CDP.FACT_STORE_SALES
   #     ;;
   # }
-
   dimension: date_cd {
     label: "DATE_CD"
     type: date_time
@@ -19,6 +18,12 @@ view: fact_store_sales {
     label: "STORE_CD"
     type: string
     sql: ${TABLE}.STORE_CD ;;
+  }
+
+  measure: purchase_value_after_tax_freight {
+    label: "PURCHASE_VALUE_AFTER_TAX_FREIGHT"
+    type: number
+    sql: ${TABLE}.PURCHASE_VALUE_AFTER_TAX_FREIGHT ;;
   }
 
 }
