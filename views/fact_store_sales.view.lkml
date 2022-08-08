@@ -1,6 +1,6 @@
 view: fact_store_sales {
 
-  sql_table_name: poc-data-engineer-learn.cdp.fact_store_sales ;;
+  sql_table_name: CDP.FACT_STORE_SALES ;;
 
   # derived_table: {
   #   sql: SELECT
@@ -11,14 +11,14 @@ view: fact_store_sales {
 
   dimension: date_cd {
     label: "DATE_CD"
-    type: number
+    type: date_time
     sql: ${TABLE}.DATE_CD ;;
   }
 
-  # dimension: store_cd {
-  #   label: "STORE_CD"
-  #   type: string
-  #   sql: ${TABLE}.STORE_CD ;;
-  # }
+  dimension: store_cd {
+    label: "STORE_CD"
+    type: string
+    sql: ${TABLE}.STORE_CD ;;
+  }
 
 }
