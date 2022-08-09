@@ -32,34 +32,34 @@ view: fact_store_sales {
     sql: ${TABLE}.LAST_DAY_PURCHASE_VALUE_AFTER_TAX_FREIGHT ;;
   }
 
-  measure: current_year_mtd_value {
-    label: "CURRENT_YEAR_MTD_VALUE"
+  measure: current_year_mtd_value_after_tax_freight {
+    label: "CURRENT_YEAR_MTD_VALUE_AFTER_TAX_FREIGHT"
     type: sum
-    sql: ${TABLE}.CURRENT_YEAR_MTD_VALUE ;;
+    sql: ${TABLE}.CURRENT_YEAR_MTD_VALUE_AFTER_TAX_FREIGHT ;;
   }
 
-  measure: last_year_mtd_value {
-    label: "LAST_YEAR_MTD_VALUE"
+  measure: last_year_mtd_value_after_tax_freight {
+    label: "LAST_YEAR_MTD_VALUE_AFTER_TAX_FREIGHT"
     type: sum
     sql: ${TABLE}.LAST_YEAR_MTD_VALUE ;;
   }
 
-  measure: current_year_ytd_value {
-    label: "CURRENT_YEAR_YTD_VALUE"
+  measure: current_year_ytd_value_after_tax_freight {
+    label: "CURRENT_YEAR_YTD_VALUE_AFTER_TAX_FREIGHT"
     type: sum
     sql: ${TABLE}.CURRENT_YEAR_YTD_VALUE ;;
   }
 
-  measure: last_year_ytd_value {
-    label: "LAST_YEAR_YTD_VALUE"
+  measure: last_year_ytd_value_after_tax_freight {
+    label: "LAST_YEAR_YTD_VALUE_AFTER_TAX_FREIGHT"
     type: sum
-    sql: ${TABLE}.LAST_YEAR_YTD_VALUE ;;
+    sql: ${TABLE}.LAST_YEAR_YTD_VALUE_AFTER_TAX_FREIGHT ;;
   }
 
   measure: customers_count {
-    label: "CUSTOMERS_COUNT"
+    label: "CUSTOMERS_COUNT_AFTER_TAX_FREIGHT"
     type: sum
-    sql: ${TABLE}.CUSTOMERS_COUNT ;;
+    sql: ${TABLE}.CUSTOMERS_COUNT_AFTER_TAX_FREIGHT ;;
   }
 
   measure: orders_count {
