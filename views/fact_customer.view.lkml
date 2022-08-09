@@ -1,0 +1,3 @@
+view: fact_customer {
+
+}

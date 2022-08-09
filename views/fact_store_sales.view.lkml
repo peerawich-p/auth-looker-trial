@@ -25,5 +25,4 @@ view: fact_store_sales {
     type: sum
     sql: ${TABLE}.PURCHASE_VALUE_AFTER_TAX_FREIGHT ;;
   }
-
 }

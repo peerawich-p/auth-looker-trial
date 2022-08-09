@@ -8,6 +8,8 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 # # and define the joins that connect them together.
 #
 
+############################################################################
+# Gib
 explore: fact_store_sales {
   label: "FACT_STORE_SALES"
   join: dim_date {
