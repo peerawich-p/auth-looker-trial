@@ -11,7 +11,7 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 ############################################################################
 # Gib
 explore: fact_store_sales {
-  label: "FACT_STORE_SALES"
+  label: "FACT_STORE_SALES_TEST"
   join: dim_date {
     relationship: many_to_one
     sql_on: ${fact_store_sales.date_cd} = ${dim_date.date_cd} ;;
