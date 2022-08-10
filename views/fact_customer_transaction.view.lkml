@@ -34,7 +34,7 @@ measure: purchase_value_before_tax {
 }
 measure: orders_count {
   label: "ORDERS_COUNT"
-  type: count_distinct
+  type: sum
   sql: ${TABLE}.ORDERS_COUNT ;;
 }
 measure: last_day_purchase_value {

@@ -7,17 +7,17 @@ dimension: date_cd {
 }
 dimension: customer_cd {
   label: "CUSTOMER_CD"
-  type: date_time
+  type: string
   sql: ${TABLE}.CUSTOMER_CD ;;
 }
 dimension: product_cd {
   label: "PRODUCT_CD"
-  type: date_time
+  type: string
   sql: ${TABLE}.PRODUCT_CD ;;
 }
 dimension: promotion_cd {
   label: "PROMOTION_CD"
-  type: date_time
+  type: string
   sql: ${TABLE}.PROMOTION_CD ;;
 }
 }
