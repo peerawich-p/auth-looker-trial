@@ -64,6 +64,11 @@ explore: fact_customer_transaction {
     relationship: many_to_one
     sql_on: ${fact_customer_transaction.product_cd} = ${dim_product.product_cd};;
   }
+
+  join: dim_channel {
+    relationship: many_to_many
+    sql_on: ${fact_customer_transaction.channel_cd}  = ${dim_channel.channel_cd};;
+  }
 }
 
 #fact_promotion

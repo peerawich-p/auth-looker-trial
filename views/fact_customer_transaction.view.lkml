@@ -22,10 +22,15 @@ dimension: customer_cd {
   type: string
   sql: ${TABLE}.CUSTOMER_CD ;;
 }
-dimension: channel_type {
-  label: "CHANNEL_TYPE"
+dimension: channel_cd {
+  label: "CHANNEL_CD"
   type: string
-  sql: ${TABLE}.CHANNEL_TYPE ;;
+  sql: ${TABLE}.CHANNEL_CD ;;
+}
+measure: min_date_cd {
+  label: "MIN_DATE_CD"
+  type: date
+  sql: MIN(${date_cd}) ;;
 }
 measure: purchase_value_before_tax {
   label: "PURCHASE_VALUE_BEFORE_TAX"
