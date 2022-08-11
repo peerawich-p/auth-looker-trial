@@ -37,6 +37,11 @@ measure: orders_count {
   type: sum
   sql: ${TABLE}.ORDERS_COUNT ;;
 }
+measure: bill_size {
+  label: "BILL_SIZE"
+  type: number
+  sql: ${purchase_value_before_tax}/${orders_count} ;;
+}
 measure: last_day_purchase_value {
   label: "LAST_DAY_PURCHASE_VALUE"
   type: sum
