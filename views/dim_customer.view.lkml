@@ -10,9 +10,9 @@ view: dim_customer {
   }
 
   dimension: customer_name {
-    label: "CUSTOEMR_NAME"
+    label: "CUSTOMER_NAME"
     type: string
-    sql: ${TABLE}.CUSTOEMR_NAME ;;
+    sql: ${TABLE}.CUSTOMER_NAME ;;
   }
 
   dimension: customer_type {
