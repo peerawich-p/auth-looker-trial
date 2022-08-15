@@ -2,9 +2,12 @@ view: fact_customer_transaction {
 
 # sql_table_name: CDP.FACT_CUSTOMER_TRANSACTION;;
   derived_table: {
-    sql: select CUSTOMER_CD, DATE_CD, date_diff(DATE_CD, lag(DATE_CD) over (partition by CUSTOMER_CD order by DATE_CD), DAY) AS DIFF_DATE
+    sql: SELECT *,
+    DATE_DIFF(DATE_CD, lag(DATE_CD) over (partition by customer_cd order by date_cd), DAY) AS DIFF_DATE
+    from `CDP.FACT_CUSTOMER_TRANSACTION`;;
+    # sql: select CUSTOMER_CD, DATE_CD, date_diff(DATE_CD, lag(DATE_CD) over (partition by CUSTOMER_CD order by DATE_CD), DAY) AS DIFF_DATE
 
-      from `CDP.FACT_CUSTOMER_TRANSACTION`; ;;
+    #   from `CDP.FACT_CUSTOMER_TRANSACTION` ;;
   }
 
 dimension: date_cd {
@@ -105,5 +108,10 @@ measure: count_customer {
     label: "DIFF_DATE"
     type: max
     sql: ${TABLE}.DIFF_DATE ;;
+  }
+  measure: median_diff_date {
+    label: "MEDIAN_DIFF_DATE"
+    type: median
+    sql: ${TABLE}.MEDIAN_DIFF_DATE ;;
   }
  }
