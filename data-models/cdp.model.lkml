@@ -103,3 +103,7 @@ explore: fact_product_cost {
     sql_on: ${fact_product_cost.product_cd} = ${dim_product.product_cd} ;;
   }
 }
+
+explore: example_datediff{
+  label: "DATE_DIFF"
+}
