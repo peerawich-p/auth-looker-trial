@@ -1,6 +1,11 @@
 view: fact_customer_transaction {
 
-sql_table_name: CDP.FACT_CUSTOMER_TRANSACTION;;
+# sql_table_name: CDP.FACT_CUSTOMER_TRANSACTION;;
+  derived_table: {
+    sql: select CUSTOMER_CD, DATE_CD, date_diff(DATE_CD, lag(DATE_CD) over (partition by CUSTOMER_CD order by DATE_CD), DAY) AS DIFF_DATE
+
+      from `CDP.FACT_CUSTOMER_TRANSACTION`; ;;
+  }
 
 dimension: date_cd {
   label: "DATE_CD"
@@ -26,6 +31,16 @@ dimension: channel_cd {
   label: "CHANNEL_CD"
   type: string
   sql: ${TABLE}.CHANNEL_CD ;;
+}
+measure: items {
+  label: "ITEMS"
+  type: sum
+  sql: CAST(${TABLE}.ITEMS as INTEGER);;
+}
+measure: basket_size  {
+  label: "BASKET_SIZE"
+  type: number
+  sql: ${items}/${orders_count}  ;;
 }
 measure: min_date_cd {
   label: "MIN_DATE_CD"
@@ -77,6 +92,7 @@ measure: last_year_ytd_value {
   sql: ${TABLE}.LAST_YEAR_YTD_VALUE ;;
 }
 measure: count_customer {
+  description: "for show visualize frequency"
   label: "COUNT_CUSTOMER"
   type: number
   sql: count(${customer_cd});;
@@ -85,4 +101,9 @@ measure: count_customer {
   #     </div>
   #   </div> ;;
 }
+  measure: diff_date {
+    label: "DIFF_DATE"
+    type: max
+    sql: ${TABLE}.DIFF_DATE ;;
+  }
  }
