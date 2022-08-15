@@ -5,7 +5,7 @@ view: dim_product {
   dimension: product_cd {
     label: "PRODUCT_CD"
     type: string
-    sql: ${TABLE} ;;
+    sql: ${TABLE}.PRODUCT_CD ;;
   }
   dimension: product_name {
     label: "PRODUCT_NAME"
