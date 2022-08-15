@@ -64,11 +64,6 @@ explore: fact_customer_transaction {
     relationship: many_to_one
     sql_on: ${fact_customer_transaction.product_cd} = ${dim_product.product_cd};;
   }
-
-  join: dim_channel {
-    relationship: many_to_many
-    sql_on: ${fact_customer_transaction.channel_cd}  = ${dim_channel.channel_cd};;
-  }
 }
 
 #fact_promotion
@@ -92,5 +87,19 @@ explore: fact_promotion {
   join: dim_promotion {
     relationship: many_to_one
     sql_on: ${fact_promotion.promotion_cd} = ${dim_promotion.promotion_cd} ;;
+  }
+}
+
+#fact_product_cost
+explore: fact_product_cost {
+  label: "FACT_PRODUCT_COST"
+  join: dim_date {
+    relationship: many_to_one
+    sql_on: ${fact_product_cost.date_cd} = ${dim_date.date_cd} ;;
+  }
+
+  join: dim_product {
+    relationship: many_to_one
+    sql_on: ${fact_product_cost.product_cd} = ${dim_product.product_cd} ;;
   }
 }

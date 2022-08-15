@@ -2,7 +2,7 @@
   title: Cdp Customer Single View
   layout: newspaper
   preferred_viewer: dashboards-next
-  tile_size: 100
+  tile_size: 20
 
   filters:
 

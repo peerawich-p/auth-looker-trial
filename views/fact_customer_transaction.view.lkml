@@ -76,4 +76,13 @@ measure: last_year_ytd_value {
   type: sum
   sql: ${TABLE}.LAST_YEAR_YTD_VALUE ;;
 }
+measure: count_customer {
+  label: "COUNT_CUSTOMER"
+  type: number
+  sql: count(${customer_cd});;
+  # html: <div class="vis">
+  #     <div class="vis-single-value" style="line-height: 1;font-size: 17px; text-align:center;color:black;" >
+  #     </div>
+  #   </div> ;;
+}
  }
