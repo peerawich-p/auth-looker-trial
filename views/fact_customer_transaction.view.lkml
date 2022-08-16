@@ -114,4 +114,29 @@ measure: count_customer {
     type: median
     sql: ${TABLE}.DIFF_DATE ;;
   }
+  # sales
+  # frequency
+  # avg bill size
+  # abg basket size
+  parameter: line_chart_parameter {
+    type: unquoted
+    description: "To be used with the Line chart value field"
+    allowed_value: {label:"Total of Sales" value: "Sales"}
+    allowed_value: {label: "Total of Frequency" value: "Frequency"}
+    allowed_value: {label: "Average of bill size" value: "AVG_Bill_Size"}
+    allowed_value: {label: "Average of basket size" value: "AVG_Basket_Size"}
+  }
+  measure: line_chart_value {
+    type: number
+    description: "To be used with line chart parameter field"
+    sql:  {% if line_chart_parameter.parameter_value == "Sales"%}
+          ${purchase_value_before_tax}
+          {%elsif line_chart_parameter.parameter_value == "Frequency"%}
+          ${count_customer}
+          {%elsif line_chart_parameter.parameter_value == "AVG_Bill_Size"%}
+          ${bill_size}
+          {% else %}
+          ${basket_size}
+          {% endif %} ;;
+  }
  }
