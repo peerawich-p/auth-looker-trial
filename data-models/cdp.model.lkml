@@ -104,6 +104,14 @@ explore: fact_product_cost {
   }
 }
 
+explore: buying_pattern {
+  label: "BUYING_PATTERN"
+  join: dim_customer {
+    relationship: many_to_one
+    sql_on: ${buying_pattern.customer_cd} = ${dim_customer.customer_cd} ;;
+  }
+}
+
 explore: example_datediff{
   label: "DATE_DIFF"
 }
