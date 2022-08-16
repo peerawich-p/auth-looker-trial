@@ -109,9 +109,9 @@ measure: count_customer {
     type: max
     sql: ${TABLE}.DIFF_DATE ;;
   }
-  measure: median_diff_date {
-    label: "MEDIAN_DIFF_DATE"
+  measure: med_diff_date {
+    label: "MED_DIFF_DATE"
     type: median
-    sql: ${TABLE}.MEDIAN_DIFF_DATE ;;
+    sql: ${TABLE}.DIFF_DATE ;;
   }
  }
