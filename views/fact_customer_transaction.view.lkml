@@ -107,10 +107,6 @@ measure: count_customer {
     sql: ${TABLE}.DIFF_DATE ;;
   }
 
-  # sales
-  # frequency
-  # avg bill size
-  # abg basket size
   parameter: measure_selector {
     type: unquoted
     default_value: "revenue"
@@ -147,38 +143,6 @@ measure: count_customer {
       {% elsif measure_selector._parameter_value == "avgBillSize" %} {{bill_size._rendered_value}}
       {% else %} {{ basket_size._rendered_value }}
       {% endif %} ;;
-  }
-  # measure: dynamic_measure {
-  #   label_from_parameter: measure_selector
-  #   type: number
-  #   sql:
-  #     {% if measure_selector._parameter_value == "count" %} ${count}
-  #     {% else %} ${total_sale_price}
-  #     {% endif %};;
-  #   html:
-  #     {% if measure_selector._parameter_value == "revenue" %} {{ total_sale_price._rendered_value }}
-  #     {% else %} {{ count._rendered_value }}
-  #     {% endif %} ;;
-  # }
-  parameter: line_chart_parameter {
-    type: unquoted
-    description: "To be used with the Line chart value field"
-    allowed_value: {label:"Total of Sales" value: "Sales"}
-    allowed_value: {label: "Total of Frequency" value: "Frequency"}
-    allowed_value: {label: "Average of bill size" value: "AVG_ Bill_Size"}
-    allowed_value: {label: "Average of basket size" value: "AVG_Basket_Size"}
-  }
-  measure: line_chart_value {
-    type: number
-    description: "To be used with line chart parameter field"
-    sql:  {% if line_chart_parameter.parameter_value == "Sales"%}
-          ${purchase_value_before_tax}
-          {%elsif line_chart_parameter.parameter_value == "Frequency"%}
-          ${count_customer}
-          {%elsif line_chart_parameter.parameter_value == "AVG_Bill_Size"%}
-          ${bill_size}
-          {% else %}
-          ${basket_size}
-          {% endif %} ;;
-  }
+    }
+
  }
