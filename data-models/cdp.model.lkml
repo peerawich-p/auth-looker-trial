@@ -47,7 +47,7 @@ explore: fact_customer_transaction {
   label: "FACT_CUSTOMER_TRANSACTION"
   join: dim_date {
     relationship: many_to_one
-    sql_on: ${fact_customer_transaction.date_cd} = ${dim_date.date_cd} ;;
+    sql_on: ${fact_customer_transaction.date_cd} = ${dim_date.date_cd};;
   }
 
   join: dim_customer {
@@ -63,6 +63,10 @@ explore: fact_customer_transaction {
   join: dim_product {
     relationship: many_to_one
     sql_on: ${fact_customer_transaction.product_cd} = ${dim_product.product_cd};;
+  }
+  join: buying_pattern {
+    relationship: many_to_one
+    sql_on: ${fact_customer_transaction.customer_cd} = ${buying_pattern.customer_cd} ;;
   }
 }
 

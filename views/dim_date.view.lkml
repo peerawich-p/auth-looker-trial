@@ -4,7 +4,6 @@ view: dim_date {
 
   dimension: date_cd {
     label: "DATE_CD"
-    primary_key: yes
     type: date_time
     sql: ${TABLE}.DATE_CD ;;
   }
