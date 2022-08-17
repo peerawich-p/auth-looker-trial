@@ -52,6 +52,27 @@ measure: purchase_value_before_tax {
   type: sum
   sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
 }
+measure: count_store {
+  label: "COUNT_STORE"
+  type: count_distinct
+  sql: ${store_cd};;
+}
+measure: avg_sales {
+  label: "AVG_SALES"
+  # value_format: "#,##0.00"
+  type: number
+  sql:  ${purchase_value_before_tax}/${count_store};;
+}
+  measure: custom_sales_visual {
+    type: count
+    html:
+    <div style="border-radius: 10px; background-color: #d3363d; color: #fff;">
+        <div style="font-size: 4rem; display: inline-block;">total sales is {{ purchase_value_before_tax }}</div>
+        <div style="display: inline-block;">
+        <p style="font-size: 1.5rem;"><strong>average of sales is {{ avg_sales }}</strong></p>
+        </div>
+    </div> ;;
+  }
 measure: orders_count {
   label: "ORDERS_COUNT"
   type: sum
@@ -94,8 +115,8 @@ measure: last_year_ytd_value {
 measure: count_customer {
   description: "for show visualize frequency"
   label: "COUNT_CUSTOMER"
-  type: number
-  sql: count(${customer_cd});;
+  type: count_distinct
+  sql: ${customer_cd};;
   # html: <div class="vis">
   #     <div class="vis-single-value" style="line-height: 1;font-size: 17px; text-align:center;color:black;" >
   #     </div>
