@@ -63,6 +63,7 @@ measure: avg_sales {
   type: number
   sql:  ${purchase_value_before_tax}/${count_store};;
 }
+
   measure: custom_sales_visual {
     type: count
     html:
@@ -70,6 +71,7 @@ measure: avg_sales {
         <div style="font-size: 4rem; display: inline-block;">total sales is {{ purchase_value_before_tax }}</div>
         <div style="display: inline-block;">
         <p style="font-size: 1.5rem;"><strong>average of sales is {{ avg_sales }}</strong></p>
+
         </div>
     </div> ;;
   }
