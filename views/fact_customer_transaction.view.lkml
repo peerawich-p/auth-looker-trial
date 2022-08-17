@@ -1,15 +1,12 @@
 view: fact_customer_transaction {
 
-# sql_table_name: CDP.FACT_CUSTOMER_TRANSACTION;;
-  derived_table: {
-    sql: SELECT *,
-    DATE_DIFF(DATE_CD, lag(DATE_CD) over (partition by customer_cd order by date_cd), DAY) AS DIFF_DATE
-    from `CDP.FACT_CUSTOMER_TRANSACTION`;;
-    # sql: select CUSTOMER_CD, DATE_CD, date_diff(DATE_CD, lag(DATE_CD) over (partition by CUSTOMER_CD order by DATE_CD), DAY) AS DIFF_DATE
+sql_table_name: CDP.FACT_CUSTOMER_TRANSACTION;;
 
-    #   from `CDP.FACT_CUSTOMER_TRANSACTION` ;;
+dimension: median_diff_date {
+    label: "MEDIAN_DIFF_DATE"
+    type: number
+    sql: ${TABLE}.MEDIAN_DIFF_DATE ;;
   }
-
 dimension: date_cd {
   label: "DATE_CD"
   type: date_time
@@ -109,21 +106,66 @@ measure: count_customer {
     type: max
     sql: ${TABLE}.DIFF_DATE ;;
   }
-  measure: med_diff_date {
-    label: "MED_DIFF_DATE"
-    type: median
-    sql: ${TABLE}.DIFF_DATE ;;
-  }
+
   # sales
   # frequency
   # avg bill size
   # abg basket size
+  parameter: measure_selector {
+    type: unquoted
+    default_value: "revenue"
+    allowed_value: {
+      label: "Sales"
+      value: "sales"
+    }
+    allowed_value: {
+      label: "Frequency"
+      value: "frequency"
+    }
+    allowed_value: {
+      label: "AVG  Bill Size"
+      value: "avgBillSize"
+    }
+    allowed_value: {
+      label: "AVG Basket Size"
+      value: "avgBasketSize"
+    }
+  }
+
+  measure: dynamic_measure {
+    label_from_parameter: measure_selector
+    type: number
+    sql:
+      {% if measure_selector._parameter_value == "sales" %} ${purchase_value_before_tax}
+      {% elsif measure_selector._parameter_value == "frequency" %} ${count_customer}
+      {% elsif measure_selector._parameter_value == "avgBillSize" %} ${bill_size}
+      {% else %} ${basket_size}
+      {% endif %};;
+    html:
+      {% if measure_selector._parameter_value == "sales" %} {{ purchase_value_before_tax._rendered_value }}
+      {% elsif measure_selector._parameter_value == "frequency" %} {{count_customer._rendered_value}}
+      {% elsif measure_selector._parameter_value == "avgBillSize" %} {{bill_size._rendered_value}}
+      {% else %} {{ basket_size._rendered_value }}
+      {% endif %} ;;
+  }
+  # measure: dynamic_measure {
+  #   label_from_parameter: measure_selector
+  #   type: number
+  #   sql:
+  #     {% if measure_selector._parameter_value == "count" %} ${count}
+  #     {% else %} ${total_sale_price}
+  #     {% endif %};;
+  #   html:
+  #     {% if measure_selector._parameter_value == "revenue" %} {{ total_sale_price._rendered_value }}
+  #     {% else %} {{ count._rendered_value }}
+  #     {% endif %} ;;
+  # }
   parameter: line_chart_parameter {
     type: unquoted
     description: "To be used with the Line chart value field"
     allowed_value: {label:"Total of Sales" value: "Sales"}
     allowed_value: {label: "Total of Frequency" value: "Frequency"}
-    allowed_value: {label: "Average of bill size" value: "AVG_Bill_Size"}
+    allowed_value: {label: "Average of bill size" value: "AVG_ Bill_Size"}
     allowed_value: {label: "Average of basket size" value: "AVG_Basket_Size"}
   }
   measure: line_chart_value {
