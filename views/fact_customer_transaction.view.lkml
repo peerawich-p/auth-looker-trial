@@ -12,6 +12,7 @@ dimension: date_cd {
   type: date_time
   sql: ${TABLE}.DATE_CD ;;
 }
+
 dimension: product_cd {
   label: "PRODUCT_CD"
   type: string
@@ -117,7 +118,7 @@ measure: last_year_ytd_value {
 measure: count_customer {
   description: "for show visualize frequency"
   label: "COUNT_CUSTOMER"
-  type: count_distinct
+  type: sum
   sql: ${customer_cd};;
   # html: <div class="vis">
   #     <div class="vis-single-value" style="line-height: 1;font-size: 17px; text-align:center;color:black;" >

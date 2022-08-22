@@ -7,11 +7,31 @@ view: dim_date {
     type: date_time
     sql: ${TABLE}.DATE_CD ;;
   }
+  # - dimension: created_year_only
+
+  #   hidden: false
+
+  #   type: int
+
+  #   sql: DATE_PART(year, ${TABLE}.created_date)
+
+
+
+  # - dimension: created_date_only
+
+  #   sql: to_char( ${TABLE}.created_date, 'MM-DD' )
+  dimension: year_only {
+    type: number
+    sql: year(${TABLE}.DATE_CD);;
+  }
+  dimension: date_only {
+    sql: to_char( ${TABLE}.DATE_CD, 'MM-DD' ) ;;
+  }
 
   dimension: year_ce {
     label: "YEAR_CE"
     type: number
-    sql: ${TABLE}.YEAR_CE ;;
+    sql: ${TABLE}.YEAR_CE;;
   }
 
   dimension: year_be {

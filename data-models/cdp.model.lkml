@@ -93,7 +93,28 @@ explore: fact_promotion {
     sql_on: ${fact_promotion.promotion_cd} = ${dim_promotion.promotion_cd} ;;
   }
 }
+#fact_customer_segment
+explore: fact_customer_segment {
+  label: "FACT_CUSTOMER_SEGMENT"
+  join: dim_date {
+    relationship: many_to_one
+    sql_on: ${fact_customer_segment.date_cd} = ${dim_date.date_cd} ;;
+  }
 
+  join: dim_customer {
+    relationship: many_to_one
+    sql_on: ${fact_customer_segment.customer_cd} = ${dim_customer.customer_cd} ;;
+  }
+  join: dim_store {
+    relationship: many_to_one
+    sql_on: ${fact_customer_segment.store_cd} = ${dim_store.store_cd} ;;
+  }
+  join: dim_segment {
+    relationship: many_to_one
+    sql_on: ${fact_customer_segment.segment_cd} = ${dim_segment.segment_cd} ;;
+  }
+}
+# CURRENT_SEGMENT_CD
 #fact_product_cost
 explore: fact_product_cost {
   label: "FACT_PRODUCT_COST"
@@ -118,4 +139,33 @@ explore: buying_pattern {
 
 explore: example_datediff{
   label: "DATE_DIFF"
+}
+
+# fact_basket_analysis
+# BASE_PRODUCT_CD
+# REC_PRODUCT_CD
+
+explore: fact_basket_analysis {
+  label: "FACT_BASKET_ANALYSIS"
+  join: dim_product{
+    relationship: many_to_one
+    sql: ${fact_basket_analysis.base_product_cd} = ${dim_product.product_cd} ;;
+  }
+  # join: dim_product{
+  #   relationship: many_to_one
+    # sql: ${fact_basket_analysis.rec_product_cd} = ${dim_product.product_cd} ;;
+  # }
+}
+
+# fact_customer_status
+explore: fact_customer_status {
+  label: "FACT_CUSTOMER_STATUS"
+  join: dim_date {
+    relationship: many_to_one
+    sql_on: ${fact_customer_status.date_cd} = ${dim_date.date_cd} ;;
+  }
+  join: dim_customer {
+    relationship: many_to_one
+    sql_on: ${fact_customer_status.customer_cd} = ${dim_customer.customer_cd} ;;
+  }
 }
