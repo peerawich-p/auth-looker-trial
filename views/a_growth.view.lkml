@@ -1,29 +1,13 @@
 view: a_growth {
+  # SELECT ... From ... WHERE date > DATEADD(year,-1,GETDATE())
   derived_table: {
     sql:
-    WITH
-    fact_customer_transaction AS (
-    SELECT
-    PURCHASE_VALUE_BEFORE_TAX
-    YEAR_PREVIOUS,
-    YEAR_CURRENT,
-    STORE_CD,
-    PRODUCT_CD,
-    FROM `CDP.FACT_CUSTOMER_TRANSACTION`
-    ),
-    cal_sale_ly AS (
-    SELECT
-    YEAR_CURRENT,
-    YEAR_PREVIOUS,
-    PURCHASE_VALUE_BEFORE_TAX WHERE YEAR_CURRENT = YEAR_CURRENT-1 AS SALE_LY,
-    FROM fact_customer_transaction
-    )
-
       SELECT
       YEAR_CURRENT,
-    YEAR_PREVIOUS,
+      YEAR_PREVIOUS,
       PURCHASE_VALUE_BEFORE_TAX
       FROM cal_sale_ly
+      WHERE YEAR_CURRENT = DATEADD(YEAR,-1,YEAR_CURRENT)
       ;;
   }
 
