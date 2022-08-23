@@ -173,6 +173,7 @@ explore: fact_customer_status {
 explore: growth_yoy {
 
 }
+explore: a_growth {}
 explore: fact_product_reccomend {
   join: dim_customer {
     relationship: many_to_one

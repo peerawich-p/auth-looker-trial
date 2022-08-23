@@ -6,6 +6,7 @@ view: growth_yoy {
         column: store_cd {}
         column: year_current {}
         column: year_previous {}
+
       }
     }
     dimension: purchase_value_before_tax {
@@ -26,9 +27,9 @@ view: growth_yoy {
       label: "YEAR_PREVIOUS"
       type: number
     }
-  measure: sale_ty {
-    label: "SALE TY"
-    type: sum
-    sql: case when ${year_current}-1 = {year_previous} then ${purchase_value_before_tax};;
-  }
+  # measure: sale_ty {
+  #   label: "SALE TY"
+  #   type: sum
+  #   sql: case when ${year_current}-1 = {year_previous} then ${purchase_value_before_tax};;
+  # }
   }
