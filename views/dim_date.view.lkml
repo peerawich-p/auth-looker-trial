@@ -20,9 +20,9 @@ view: dim_date {
   # - dimension: created_date_only
 
   #   sql: to_char( ${TABLE}.created_date, 'MM-DD' )
-  dimension: year_only {
+  dimension: previous_year_ce {
     type: number
-    sql: year(${TABLE}.DATE_CD);;
+    sql: ${TABLE}.YEAR_CE-1;;
   }
   dimension: date_only {
     sql: to_char( ${TABLE}.DATE_CD, 'MM-DD' ) ;;

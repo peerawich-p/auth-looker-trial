@@ -1,6 +1,6 @@
 view: fact_customer_status {
 
-  sql_table_name: CDP.FACT_CUSTOMER_SEGMENT;;
+  sql_table_name: CDP.FACT_CUSTOMER_STATUS;;
 
   dimension: date_cd {
     label: "DATE_CD"
@@ -12,6 +12,12 @@ view: fact_customer_status {
     label: "CUSTOMER_CD"
     type: string
     sql: ${TABLE}.CUSTOMER_CD ;;
+  }
+  measure: count_customer {
+    description: "for show visualize frequency"
+    label: "COUNT_CUSTOMER"
+    type: sum
+    sql: ${customer_cd};;
   }
 # LAST_PURCHASE_DATE  DATETIME
   dimension: last_purchase_date {

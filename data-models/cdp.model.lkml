@@ -169,3 +169,17 @@ explore: fact_customer_status {
     sql_on: ${fact_customer_status.customer_cd} = ${dim_customer.customer_cd} ;;
   }
 }
+
+explore: growth_yoy {
+
+}
+explore: fact_product_reccomend {
+  join: dim_customer {
+    relationship: many_to_one
+    sql_on: ${fact_product_reccomend.customer_cd} = ${dim_customer.customer_cd} ;;
+  }
+  join: dim_product {
+    relationship: many_to_one
+    sql: ${fact_product_reccomend.base_product_cd} = ${dim_product.product_cd} ;;
+  }
+}
