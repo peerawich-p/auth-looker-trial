@@ -1,4 +1,5 @@
 view: a_growth {
+
   #  DATE_ADD(DATE_CD ,INTERVAL -1 YEAR) AS DATE_CD,
   derived_table: {
     sql:
