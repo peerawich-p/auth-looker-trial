@@ -1,12 +1,28 @@
 view: fact_customer_transaction {
 
-sql_table_name: CDP.FACT_CUSTOMER_TRANSACTION;;
+derived_table: {
+  sql: SELECT
+      *,
+      (
+        SELECT PURCHASE_VALUE_BEFORE_TAX
+        FROM `CDP.FACT_CUSTOMER_TRANSACTION` inner_table
+        WHERE inner_table.DATE_CD = DATE_ADD(outer_table.DATE_CD, INTERVAL -1 YEAR)
+        AND inner_table.CUSTOMER_CD = outer_table.CUSTOMER_CD
+        AND inner_table.PRODUCT_CD = outer_table.PRODUCT_CD
+        AND inner_table.STORE_CD = outer_table.STORE_CD
+        AND inner_table.ITEMS = outer_table.ITEMS
+        AND inner_table.CHANNEL_CD = outer_table.CHANNEL_CD
+      ) AS LAST_YEAR_PURCHASE_VALUE_BEFORE_TAX
+    FROM `CDP.FACT_CUSTOMER_TRANSACTION` outer_table ;;
+}
+
 
 dimension: median_diff_date {
     label: "MEDIAN_DIFF_DATE"
     type: number
     sql: ${TABLE}.MEDIAN_DIFF_DATE ;;
   }
+
 dimension: date_cd {
   label: "DATE_CD"
   type: date_time
@@ -174,6 +190,12 @@ measure: count_customer {
       label: "AVG Basket Size"
       value: "avgBasketSize"
     }
+  }
+
+  measure:  last_year_purchase_value_before_tax {
+    label: "LAST_YEAR_PURCHASE_VALUE_BEFORE_TAX"
+    type: sum
+    sql:  ${TABLE}.LAST_YEAR_PURCHASE_VALUE_BEFORE_TAX ;;
   }
 
   measure: dynamic_measure {
