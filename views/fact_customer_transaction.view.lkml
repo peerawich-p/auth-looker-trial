@@ -12,6 +12,21 @@ dimension: date_cd {
   type: date_time
   sql: ${TABLE}.DATE_CD ;;
 }
+  dimension: year{
+    label: "YEAR"
+    type: date_year
+    sql: ${TABLE}.date_cd ;;
+  }
+  dimension: year_current{
+    label: "YEAR_CURRENT"
+    type: number
+    sql: CAST(${year} as INTEGER) ;;
+  }
+  dimension: year_previous{
+    label: "YEAR_PREVIOUS"
+    type: number
+    sql: ${year_current}-1 ;;
+  }
 
 dimension: product_cd {
   label: "PRODUCT_CD"
@@ -53,12 +68,15 @@ measure: purchase_value_before_tax {
   type: sum
   sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
 }
-  # measure: purchase_value_before_tax_previous {
-  #   label: "PURCHASE_VALUE_BEFORE_TAX_PREVIOUS"
-  #   type: sum
-  #   sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
-  #   # filters: [year]
-  # }
+  measure: sale_ty {
+    label: "SALE TY"
+    filters: {
+      field: year_current
+      value: "-1"
+    }
+    type: sum
+    sql: ${TABLE}.purchase_value_before_tax;;
+  }
 measure: count_store {
   label: "COUNT_STORE"
   type: count_distinct
@@ -174,21 +192,7 @@ measure: count_customer {
       {% else %} {{ basket_size._rendered_value }}
       {% endif %} ;;
     }
-  dimension: year{
-    label: "YEAR"
-    type: date_year
-    sql: ${TABLE}.date_cd ;;
-  }
-  dimension: year_current{
-    label: "YEAR_CURRENT"
-    type: number
-    sql: CAST(${year} as INTEGER) ;;
-  }
-  dimension: year_previous{
-    label: "YEAR_PREVIOUS"
-    type: number
-    sql: ${year_current}-1 ;;
-  }
+
   # measure: sale_ty {
   #   label: "SALE TY"
   #   type: sum

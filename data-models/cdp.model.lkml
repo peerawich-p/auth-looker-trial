@@ -171,9 +171,19 @@ explore: fact_customer_status {
 }
 
 explore: growth_yoy {
-
+  # label: "GROWTH_YOY"
+  # join: dim_date {
+  #   relationship: many_to_one
+  #   sql_on: ${growth_yoy.date_cd}.date_cd} = ${dim_date.date_cd} ;;
+  # }
 }
-explore: a_growth {}
+explore: a_growth {
+    label: "A_GROWTH"
+  join: dim_date {
+    relationship: many_to_one
+    sql_on: ${a_growth.date_cd} = ${dim_date.date_cd} ;;
+  }
+}
 explore: fact_product_reccomend {
   join: dim_customer {
     relationship: many_to_one

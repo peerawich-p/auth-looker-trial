@@ -1,14 +1,19 @@
 view: a_growth {
-  # SELECT ... From ... WHERE date > DATEADD(year,-1,GETDATE())
+  #  DATE_ADD(DATE_CD ,INTERVAL -1 YEAR) AS DATE_CD,
   derived_table: {
     sql:
+      WITH
+      fix_date AS (
       SELECT
-      YEAR_CURRENT,
-      YEAR_PREVIOUS,
+      DATE_ADD(DATE_CD ,INTERVAL -1 YEAR) AS DATE_CD,
       PURCHASE_VALUE_BEFORE_TAX
-      FROM cal_sale_ly
-      WHERE YEAR_CURRENT = DATEADD(YEAR,-1,YEAR_CURRENT)
-      ;;
+      FROM `CDP.FACT_CUSTOMER_TRANSACTION`
+      )
+      SELECT
+        DATE_CD,
+        PURCHASE_VALUE_BEFORE_TAX
+      FROM fix_date
+      order by DATE_CD ;;
   }
 
   dimension: year_current {
@@ -21,11 +26,15 @@ view: a_growth {
     type: number
     sql: ${TABLE}.YEAR_PREVIOUS ;;
   }
+  dimension: date_cd {
+    type: date_time
+    sql: ${TABLE}.DATE_CD ;;
+  }
 
-  dimension: sale_ly {
+  dimension: fix_date {
     label: "SALE_LY"
     type: number
-    sql: ${TABLE}.SALE_LY ;;
+    sql: ${TABLE}.fix_date ;;
   }
   measure: purchase_value_before_tax {
     label: "PURCHASE_VALUE_BEFORE_TAX"
