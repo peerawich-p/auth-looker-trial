@@ -171,11 +171,30 @@ explore: fact_customer_status {
 }
 
 explore: growth_yoy {
-  # label: "GROWTH_YOY"
-  # join: dim_date {
-  #   relationship: many_to_one
-  #   sql_on: ${growth_yoy.date_cd}.date_cd} = ${dim_date.date_cd} ;;
-  # }
+  label: "GROWTH_YOY"
+  join: dim_date {
+    relationship: many_to_one
+    sql_on: ${growth_yoy.date_cd} = ${dim_date.date_cd};;
+  }
+
+  join: dim_customer {
+    relationship: many_to_one
+    sql_on: ${growth_yoy.customer_cd} = ${dim_customer.customer_cd};;
+  }
+
+  join: dim_store {
+    relationship: many_to_one
+    sql_on: ${growth_yoy.store_cd} = ${dim_store.store_cd} ;;
+  }
+
+  join: dim_product {
+    relationship: many_to_one
+    sql_on: ${growth_yoy.product_cd} = ${dim_product.product_cd};;
+  }
+  join: buying_pattern {
+    relationship: many_to_one
+    sql_on: ${growth_yoy.customer_cd} = ${buying_pattern.customer_cd} ;;
+  }
 }
 explore: a_growth {
     label: "A_GROWTH"
