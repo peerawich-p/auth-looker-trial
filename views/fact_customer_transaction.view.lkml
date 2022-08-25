@@ -68,14 +68,21 @@ view: fact_customer_transaction {
     type: sum
     sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
   }
-  measure: sale_ty {
-    label: "SALE TY"
-    filters: {
-      field: year_current
-      value: "-1"
-    }
+  measure: purchase_value_before_tax_ly {
+    label: "PURCHASE_VALUE_BEFORE_TAX_LY"
+    type: percent_of_previous
+    sql: ${purchase_value_before_tax} ;;
+  }
+  measure: sale_last_period {
+    label: "SALES_LAST_YEAR"
     type: sum
-    sql: ${TABLE}.purchase_value_before_tax;;
+    sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
+    # hidden: yes
+    filters:
+    {
+      field: date_cd
+      value: "365 days"
+    }
   }
   measure: count_store {
     label: "COUNT_STORE"
@@ -138,6 +145,16 @@ view: fact_customer_transaction {
     label: "LAST_YEAR_YTD_VALUE"
     type: sum
     sql: ${TABLE}.LAST_YEAR_YTD_VALUE ;;
+  }
+  measure: transaction_cost_value {
+    label: "TRANSACTION_COST_VALUE"
+    type: number
+    sql: ${TABLE}.TRANSACTION_COST_VALUE ;;
+  }
+  measure: transaction_profit_value {
+    label: "TRANSACTION_PROFIT_VALUE"
+    type: number
+    sql: ${TABLE}.TRANSACTION_PROFIT_VALUE ;;
   }
   measure: count_customer {
     description: "for show visualize frequency"
