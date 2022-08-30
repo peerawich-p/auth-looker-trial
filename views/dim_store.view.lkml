@@ -14,4 +14,19 @@ view: dim_store {
     type: string
     sql: ${TABLE}.STORE_NAME ;;
   }
+  dimension: store_size {
+    label: "STORE_SIZE"
+    type: string
+    sql: ${TABLE}.STORE_SIZE ;;
+  }
+  # dimension: store_size {
+  #   label: "STORE_SIZE"
+  #   type: number
+  #   sql: CAST(${TABLE}.STORE_SIZE as INTEGER);;
+  # }
+  # measure: store_size_int {
+  #   label: "STORE_SIZE"
+  #   type: number
+  #   sql: ${store_size};;
+  # }
 }

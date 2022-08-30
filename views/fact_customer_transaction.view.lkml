@@ -2,6 +2,12 @@ view: fact_customer_transaction {
 
   sql_table_name: CDP.FACT_CUSTOMER_TRANSACTION;;
 
+  dimension: customer_cd {
+    label: "CUSTOMER_CD"
+    type: string
+    sql: ${TABLE}.CUSTOMER_CD ;;
+  }
+
   dimension: median_diff_date {
     label: "MEDIAN_DIFF_DATE"
     type: number
@@ -11,21 +17,6 @@ view: fact_customer_transaction {
     label: "DATE_CD"
     type: date_time
     sql: ${TABLE}.DATE_CD ;;
-  }
-  dimension: year{
-    label: "YEAR"
-    type: date_year
-    sql: ${TABLE}.date_cd ;;
-  }
-  dimension: year_current{
-    label: "YEAR_CURRENT"
-    type: number
-    sql: CAST(${year} as INTEGER) ;;
-  }
-  dimension: year_previous{
-    label: "YEAR_PREVIOUS"
-    type: number
-    sql: ${year_current}-1 ;;
   }
 
   dimension: product_cd {
@@ -38,11 +29,7 @@ view: fact_customer_transaction {
     type: string
     sql: ${TABLE}.STORE_CD ;;
   }
-  dimension: customer_cd {
-    label: "CUSTOMER_CD"
-    type: string
-    sql: ${TABLE}.CUSTOMER_CD ;;
-  }
+
   dimension: channel_cd {
     label: "CHANNEL_CD"
     type: string
@@ -68,21 +55,37 @@ view: fact_customer_transaction {
     type: sum
     sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
   }
-  measure: purchase_value_before_tax_ly {
-    label: "PURCHASE_VALUE_BEFORE_TAX_LY"
-    type: percent_of_previous
-    sql: ${purchase_value_before_tax} ;;
-  }
-  measure: sale_last_period {
-    label: "SALES_LAST_YEAR"
+  measure: total_sale {
+    label: "TOTAL_SALE"
     type: sum
-    sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
-    # hidden: yes
-    filters:
-    {
-      field: date_cd
-      value: "365 days"
-    }
+   sql: SELECT COUNT(DISTINCT(STORE_CD))
+FROM `poc-data-engineer-learn.CDP.FACT_CUSTOMER_TRANSACTION`
+    # sql: cou ;;
+  }
+  dimension: store_size {
+    label: "STORE_SIZE"
+    type: string
+    sql: ${dim_store.store_size} ;;
+  }
+  dimension: store_size_num {
+    label: "STORE_SIZE_NUM"
+    type: number
+    sql: cast(${store_size} as integer) ;;
+  }
+  measure: total_area {
+    label: "TOTAL_AREA"
+    type: sum
+    sql: ${store_size_num} ;;
+  }
+  measure: sale_per_sqm {
+    label: "SALE_PER_SQM"
+    type: number
+    sql: ${purchase_value_before_tax}/${total_area} ;;
+  }
+  measure: avg_sale_per_sqm {
+    label: "AVG_SALE_PER_SQM"
+    type: number
+    sql:  ${sale_per_sqm}/${count_store};;
   }
   measure: count_store {
     label: "COUNT_STORE"
@@ -148,13 +151,24 @@ view: fact_customer_transaction {
   }
   measure: transaction_cost_value {
     label: "TRANSACTION_COST_VALUE"
-    type: number
+    type: sum
     sql: ${TABLE}.TRANSACTION_COST_VALUE ;;
   }
   measure: transaction_profit_value {
     label: "TRANSACTION_PROFIT_VALUE"
-    type: number
+    type: sum
     sql: ${TABLE}.TRANSACTION_PROFIT_VALUE ;;
+  }
+  measure: profit_margin {
+    label: "NET_PROFIT_MARGIN"
+    type: number
+    sql: (${transaction_profit_value}/${purchase_value_before_tax})*100 ;;
+  }
+  measure: avg_margin {
+    label: "AVG_MARGIN"
+    # value_format: "#,##0.00"
+    type: number
+    sql:  ${profit_margin}/${count_store};;
   }
   measure: count_customer {
     description: "for show visualize frequency"
@@ -205,11 +219,20 @@ view: fact_customer_transaction {
       {% else %} {{ basket_size._rendered_value }}
       {% endif %} ;;
   }
+  dimension: year{
+    label: "YEAR"
+    type: date_year
+    sql: ${TABLE}.date_cd ;;
+  }
+  dimension: year_current{
+    label: "YEAR_CURRENT"
+    type: number
+    sql: CAST(${year} as INTEGER) ;;
+  }
+  dimension: year_previous{
+    label: "YEAR_PREVIOUS"
+    type: number
+    sql: ${year_current}-1 ;;
+  }
 
-  # measure: sale_ty {
-  #   label: "SALE TY"
-  #   type: sum
-  #   filters: [year_current: "year_current-1"]
-  #   sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
-  # }
 }
