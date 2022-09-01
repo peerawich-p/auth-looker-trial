@@ -19,12 +19,18 @@ view: fact_store_sales {
     type: string
     sql: ${TABLE}.STORE_CD ;;
   }
+  measure: total_store {
+    label: "TOTAL_STORE"
+    type: count_distinct
+    sql: ${TABLE}.STORE_CD ;;
+  }
 
   measure: purchase_value_after_tax_freight {
     label: "PURCHASE_VALUE_AFTER_TAX_FREIGHT"
     type: sum
     sql: ${TABLE}.PURCHASE_VALUE_AFTER_TAX_FREIGHT ;;
   }
+
 
   measure: last_day_purchase_value_after_tax_freight {
     label: "LAST_DAY_PURCHASE_VALUE_AFTER_TAX_FREIGHT"
@@ -73,5 +79,30 @@ view: fact_store_sales {
     type: sum
     sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
   }
+  measure: purchase_value_before_tax_lastyear {
+    label: "PURCHASE_VALUE_BEFORE_TAX_LASTYEAR"
+    type: sum
+    sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX_LASTYEAR ;;
+  }
+  measure: total_sale {
+    label: "TOTAL_SALE"
+    type: sum
+    # hidden: yes
+    sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
+  }
+  measure: avg_sales {
+    label: "AVG_SALES"
+    type: number
+    sql: ${total_sale} /${total_store};;
+  }
+
+  measure: status {
+    sql: ${TABLE}.status ;;
+    html:
+      <div ="color: black; background-color: lightblue; font-size:100%; text-align:center">"dd"</div>
+
+;;
+  }
+
 
 }

@@ -72,6 +72,10 @@ explore: fact_customer_transaction {
     relationship: many_to_one
     sql_on: ${fact_customer_transaction.customer_cd} = ${buying_pattern.customer_cd} ;;
   }
+  # join: fact_store_sales {
+  #   relationship: many_to_many
+  #   sql_on: ${fact_customer_transaction.date_cd} = ${fact_store_sales.date_cd} ;;
+  # }
 #   join: a_growth {
 #     relationship: many_to_one
 #     sql_on: ${fact_customer_transaction.customer_cd} = ${a_growth.customer_cd} ;;
@@ -214,5 +218,20 @@ explore: total_sale_transaction {
   join: dim_store {
     sql_on: ${total_sale_transaction.store_cd} = ${dim_store.store_cd} ;;
     relationship: many_to_one
+  }
+}
+explore: customer_count {
+  label: "CUSTOMER_COUNT"
+  join: dim_customer {
+    relationship: many_to_one
+    sql_on: ${customer_count.customer_cd} = ${dim_customer.customer_cd} ;;
+  }
+  join: dim_store {
+    relationship: many_to_one
+    sql_on: ${customer_count.store_cd} = ${dim_store.store_cd} ;;
+  }
+  join: dim_date {
+    relationship: many_to_one
+    sql_on: ${customer_count.date_cd} = ${dim_date.date_cd} ;;
   }
 }

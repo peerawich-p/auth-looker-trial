@@ -7,6 +7,11 @@ view: dim_date {
     type: date_time
     sql: ${TABLE}.DATE_CD ;;
   }
+  dimension: date_year_month {
+    label: "DATE_YEAR_MONTH"
+    type: date_month
+    sql: ${TABLE}.DATE_CD ;;
+  }
   # - dimension: created_year_only
 
   #   hidden: false

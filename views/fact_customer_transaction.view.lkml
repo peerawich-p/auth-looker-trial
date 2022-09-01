@@ -18,6 +18,16 @@ view: fact_customer_transaction {
     type: date_time
     sql: ${TABLE}.DATE_CD ;;
   }
+  dimension: date_year_month {
+    label: "DATE_YEAR_MONTH"
+    type: date_month
+    sql: ${TABLE}.DATE_CD ;;
+  }
+  # dimension: year {
+  #   label: "YEAR"
+  #   type: number
+  #   sql: EXTRACT(YEARS from ${date_cd});;
+  # }
 
   dimension: product_cd {
     label: "PRODUCT_CD"
@@ -50,6 +60,11 @@ view: fact_customer_transaction {
     type: date
     sql: MIN(${date_cd}) ;;
   }
+  measure: purchase_value_before_tax_lastyear {
+    label: "PURCHASE_VALUE_BEFORE_TAX_LASTYEAR"
+    type: sum
+    sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX_LASTYEAR ;;
+  }
   measure: purchase_value_before_tax {
     label: "PURCHASE_VALUE_BEFORE_TAX"
     type: sum
@@ -58,9 +73,7 @@ view: fact_customer_transaction {
   measure: total_sale {
     label: "TOTAL_SALE"
     type: sum
-   sql: SELECT COUNT(DISTINCT(STORE_CD))
-FROM `poc-data-engineer-learn.CDP.FACT_CUSTOMER_TRANSACTION`
-    # sql: cou ;;
+   sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
   }
   dimension: store_size {
     label: "STORE_SIZE"
@@ -173,7 +186,7 @@ FROM `poc-data-engineer-learn.CDP.FACT_CUSTOMER_TRANSACTION`
   measure: count_customer {
     description: "for show visualize frequency"
     label: "COUNT_CUSTOMER"
-    type: sum
+    type: count_distinct
     sql: ${customer_cd};;
   }
   measure: diff_date {
@@ -234,5 +247,31 @@ FROM `poc-data-engineer-learn.CDP.FACT_CUSTOMER_TRANSACTION`
     type: number
     sql: ${year_current}-1 ;;
   }
-
+  dimension: month_current {
+    label: "MONTH_CURRENT"
+    type: number
+    sql: EXTRACT(MONTH from ${date_cd});;
+    # EXTRACT(MONTH FROM
+  }
+  dimension: month_previous {
+    label: "MONTH_PREVIOUS"
+    type: number
+    sql: EXTRACT(MONTH from ${date_cd});;
+  }
+  measure: sale_ly {
+    label: "SALE_LY"
+    type: sum
+    sql: ${purchase_value_before_tax} ;;
+    filters: {
+      field: year_previous
+    }
+  }
+  # measure: blue_total {
+  #   type: sum
+  #   sql: ${amount} ;;
+  #   filters: {
+  #     field: color
+  #     value: "blue"
+  #   }
+  # }
 }

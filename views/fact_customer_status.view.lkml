@@ -16,7 +16,7 @@ view: fact_customer_status {
   measure: count_customer {
     description: "for show visualize frequency"
     label: "COUNT_CUSTOMER"
-    type: sum
+    type: count_distinct
     sql: ${customer_cd};;
   }
 # LAST_PURCHASE_DATE  DATETIME
