@@ -172,6 +172,10 @@ explore: fact_customer_status {
     relationship: many_to_one
     sql_on: ${fact_customer_status.customer_cd} = ${dim_customer.customer_cd} ;;
   }
+  join: dim_store {
+    relationship: many_to_one
+    sql_on: ${fact_customer_status.store_cd} = ${dim_store.store_cd} ;;
+  }
 }
 
 explore: growth_yoy {
@@ -234,4 +238,35 @@ explore: customer_count {
     relationship: many_to_one
     sql_on: ${customer_count.date_cd} = ${dim_date.date_cd} ;;
   }
+}
+
+explore: customer_new_count {
+  label: "CUSTOMER_NEW_COUNT"
+  join: dim_customer {
+    relationship: many_to_one
+    sql_on: ${customer_new_count.customer_cd} = ${dim_customer.customer_cd} ;;
+  }
+  }
+  explore: fact_customer_status_temp {
+    label: "FACT_CUSTOMER_STATUS_TEMP"
+    join: dim_customer {
+      relationship: many_to_one
+      sql_on: ${fact_customer_status_temp.customer_cd} = ${dim_customer.customer_cd} ;;
+    }
+    join: dim_date {
+      relationship: many_to_one
+      sql_on: ${fact_customer_status_temp.date_cd} = ${dim_date.date_cd} ;;
+    }
+    join: dim_store {
+      relationship: many_to_one
+      sql_on: ${fact_customer_status_temp.store_cd} = ${dim_store.store_cd} ;;
+    }
+}
+
+explore: avg_sales {
+  label: "AVG_SALES"
+    join: dim_date {
+      relationship: many_to_one
+      sql_on: ${avg_sales.date_cd} = ${dim_date.date_cd} ;;
+    }
 }

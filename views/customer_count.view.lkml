@@ -1,11 +1,3 @@
-# view: customer_count {
-#   derived_table: {
-#     sql:
-#       SELECT *
-#       FROM events
-#       WHERE type NOT IN ('test', 'staff') ;;
-#   }
-# }
 view: customer_count {
   derived_table: {
     explore_source: fact_customer_transaction {
@@ -16,9 +8,8 @@ view: customer_count {
   }
   dimension: customer_cd {
     label: "CUSTOMER_CD"
-    type: number
-    primary_key:
-    yes sql: ${TABLE}.customer_cd ;;
+    type: string
+    sql: ${TABLE}.customer_cd ;;
   }
   dimension: store_cd {
     label: "STORE_CD"
@@ -26,9 +17,14 @@ view: customer_count {
     sql: ${TABLE}.store_cd ;;
   }
   dimension: date_cd {
-    label: "CUSTOMER_CD"
+    label: "DATE_CD"
     type: date_time
     sql: ${TABLE}.date_cd ;;
+  }
+  dimension: type {
+    label: "TYPE"
+    type: string
+    sql: "Current Customer" ;;
   }
   measure: count_customer {
     label: "COUNT_CUSTOMER_TY"

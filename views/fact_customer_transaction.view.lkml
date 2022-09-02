@@ -55,6 +55,11 @@ view: fact_customer_transaction {
     type: number
     sql: ${items}/${orders_count}  ;;
   }
+  measure: avg_basket_size  {
+    label: "AVG_BASKET_SIZE"
+    type: number
+    sql: ${basket_size}/${orders_count}  ;;
+  }
   measure: min_date_cd {
     label: "MIN_DATE_CD"
     type: date
@@ -111,6 +116,24 @@ view: fact_customer_transaction {
     type: number
     sql:  ${purchase_value_before_tax}/${count_store};;
   }
+  # measure: total_avg_sales {
+  #   label: "TOTAL_AVG_SALES"
+  #   # value_format: "#,##0.00"
+  #   type: sum
+  #   sql:  ${avg_sales};;
+  # }
+  # measure: totalSales {
+  #   label: "TOTAL_SALES"
+  #   # value_format: "#,##0.00"
+  #   type: sum
+  #   sql:  ${purchase_value_before_tax};;
+  # }
+  measure: sum_avg_sales {
+    label: "SUM_AVG_SALES"
+    # value_format: "#,##0.00"
+    type: number
+    sql:  ${avg_sales};;
+  }
 
   measure: custom_sales_visual {
     type: count
@@ -132,6 +155,12 @@ view: fact_customer_transaction {
     label: "BILL_SIZE"
     type: number
     sql: ${purchase_value_before_tax}/${orders_count} ;;
+  }
+  measure: avg_bill_size {
+    label: "AVG_BILL_SIZE"
+    # value_format: "#,##0.00"
+    type: number
+    sql:  ${bill_size}/${count_store};;
   }
   measure: last_day_purchase_value {
     label: "LAST_DAY_PURCHASE_VALUE"

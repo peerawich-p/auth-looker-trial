@@ -1,6 +1,6 @@
-view: fact_customer_status {
+view: fact_customer_status_temp {
 
-  sql_table_name: CDP.FACT_CUSTOMER_STATUS;;
+  sql_table_name: CDP.FACT_CUSTOMER_STATUS_TEMP;;
 
   dimension: date_cd {
     label: "DATE_CD"
@@ -34,28 +34,33 @@ view: fact_customer_status {
     }
     sql: ${customer_cd};;
   }
+  measure: count_customer_old {
+    label: "COUNT_CUSTOMER_OLD"
+    type: count_distinct
+    filters: {
+      field: is_new_old
+      value: "OLD"
+    }
+    sql: ${customer_cd};;
+  }
+  measure: count_customer_return {
+    label: "COUNT_CUSTOMER_RETURN"
+    type: count_distinct
+    filters: {
+      field: is_new_old
+      value: "RETURN"
+    }
+    sql: ${customer_cd};;
+  }
   # measure: red_total {
-
   #   type: sum
-
   #   sql: ${amount} ;;
-
   #   filters: {
-
   #     field: color
-
   #     value: "red"
-
   #   }
+  # }
 
-  # }
-  # measure: count_customer_new {
-  #   description: "for show visualize frequency"
-  #   label: "COUNT_CUSTOMER_NEW"
-  #   type: count_distinct
-  #   # sql: ${customer_cd} where ${is_new_old} is "NEW";;
-  #   sql:   sum(if(${is_new_old}="NEW" , ${customer_cd}, null)),${customer_cd});;
-  # }
 # LAST_PURCHASE_DATE  DATETIME
   dimension: last_purchase_date {
     label: "LAST_PURCHASE_DATE"
