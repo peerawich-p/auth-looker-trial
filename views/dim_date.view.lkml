@@ -7,6 +7,13 @@ view: dim_date {
     type: date_time
     sql: ${TABLE}.DATE_CD ;;
   }
+
+  dimension_group: created {
+    type: time
+    timeframes: [time, hour, date, week, month, year, hour_of_day, day_of_week, month_num, raw, week_of_year,month_name]
+    sql: TIMESTAMP(${TABLE}.DATE_CD) ;;
+
+  }
   dimension: date_year_month {
     label: "DATE_YEAR_MONTH"
     type: date_month

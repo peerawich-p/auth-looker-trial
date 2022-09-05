@@ -10,6 +10,13 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 
 ############################################################################
 # fact_store_sales
+explore: sale_ly {
+  label: "SALE_LY"
+  join: dim_date {
+    relationship: many_to_one
+    sql_on: ${sale_ly.date_cd} = ${dim_date.date_cd} ;;
+  }
+}
 explore: fact_store_sales {
   label: "FACT_STORE_SALES"
   join: dim_date {

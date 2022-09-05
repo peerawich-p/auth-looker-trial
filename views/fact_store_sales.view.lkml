@@ -90,6 +90,9 @@ view: fact_store_sales {
     # hidden: yes
     sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
   }
+  # measure: total_sale_ly {
+
+  # }
   measure: avg_sales {
     label: "AVG_SALES"
     type: number
