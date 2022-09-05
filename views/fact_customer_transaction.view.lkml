@@ -202,8 +202,9 @@ view: fact_customer_transaction {
     sql: ${TABLE}.TRANSACTION_PROFIT_VALUE ;;
   }
   measure: profit_margin {
-    label: "NET_PROFIT_MARGIN"
+    label: "Net Profit Margin"
     type: number
+    value_format: "#,###.00\%"
     sql: (${transaction_profit_value}/${purchase_value_before_tax})*100 ;;
   }
   measure: avg_margin {
