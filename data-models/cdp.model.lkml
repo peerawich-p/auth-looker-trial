@@ -9,6 +9,7 @@ include: "/views/*.view.lkml"                # include all views in the views/ f
 #
 
 ############################################################################
+
 # fact_store_sales
 explore: sale_ly {
   label: "SALE_LY"
@@ -16,6 +17,8 @@ explore: sale_ly {
     relationship: many_to_one
     sql_on: ${sale_ly.date_cd} = ${dim_date.date_cd} ;;
   }
+  # sql_always_where: cast({% parameter sale_ly.base_year%}-1) and {% parameter sale_ly.base_year%};;
+  # sql_always_where: cast(${} ;;
 }
 explore: fact_store_sales {
   label: "FACT_STORE_SALES"
@@ -27,6 +30,10 @@ explore: fact_store_sales {
   join: dim_store {
     relationship: many_to_one
     sql_on: ${fact_store_sales.store_cd} = ${dim_store.store_cd} ;;
+  }
+  join: sale_ly {
+    relationship: many_to_one
+    sql_on: ${fact_store_sales.date_cd} = ${sale_ly.date_cd} ;;
   }
 }
 
@@ -49,16 +56,15 @@ explore: fact_customer {
   }
 }
 
-  # explore: customer {
-  #   access_filter: {
-  #     field: customer.name
-  #     user_attribute: allowed_customers
-  #   }
-  # }
-
 #fact_customer_transaction
 explore: fact_customer_transaction {
   label: "FACT_CUSTOMER_TRANSACTION"
+  # sql_always_where:
+  # safe_cast(${fact_customer_transaction.date_cd} as INT64) -- target field
+  # between
+  # ({% parameter fact_customer_transaction.base_year %} - 1) -- filter value - 1
+  # and {% parameter fact_customer_transaction.base_year %} -- filter value
+  # ;;
   join: dim_date {
     relationship: many_to_one
     sql_on: ${fact_customer_transaction.date_cd} = ${dim_date.date_cd};;
@@ -79,10 +85,10 @@ explore: fact_customer_transaction {
     relationship: many_to_one
     sql_on: ${fact_customer_transaction.customer_cd} = ${buying_pattern.customer_cd} ;;
   }
-  # join: fact_store_sales {
-  #   relationship: many_to_many
-  #   sql_on: ${fact_customer_transaction.date_cd} = ${fact_store_sales.date_cd} ;;
-  # }
+  join: fact_store_sales {
+    relationship: many_to_one
+    sql_on: ${fact_customer_transaction.date_cd} = ${fact_store_sales.date_cd} ;;
+  }
 #   join: a_growth {
 #     relationship: many_to_one
 #     sql_on: ${fact_customer_transaction.customer_cd} = ${a_growth.customer_cd} ;;

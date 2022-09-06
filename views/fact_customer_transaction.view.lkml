@@ -224,7 +224,9 @@ view: fact_customer_transaction {
     type: max
     sql: ${TABLE}.DIFF_DATE ;;
   }
-
+  # parameter: base_year {
+  #   type: unquoted
+  # }
   parameter: measure_selector {
     type: unquoted
     default_value: "revenue"
@@ -296,12 +298,4 @@ view: fact_customer_transaction {
       field: year_previous
     }
   }
-  # measure: blue_total {
-  #   type: sum
-  #   sql: ${amount} ;;
-  #   filters: {
-  #     field: color
-  #     value: "blue"
-  #   }
-  # }
 }

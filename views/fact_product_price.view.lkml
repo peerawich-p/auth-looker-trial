@@ -10,19 +10,19 @@ view: fact_product_price {
       type: string
       sql: ${TABLE}.PRODUCT_CD ;;
     }
-    dimension: product_cost {
+    measure: product_cost {
       label: "PRODUCT_COST"
-      type: number
+      type: sum
       sql: ${TABLE}.PRODUCT_COST ;;
     }
-    dimension: product_price {
+    measure: product_price {
       label: "PRODUCT_PRICE"
-      type: number
+      type: sum
       sql: ${TABLE}.PRODUCT_PRICE ;;
     }
-    dimension: product_profit {
+    measure: product_profit {
       label: "PRODUCT_PROFIT"
-      type: number
+      type: sum
       sql: ${TABLE}.PRODUCT_PROFIT ;;
     }
   }

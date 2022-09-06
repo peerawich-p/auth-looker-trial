@@ -1,34 +1,25 @@
 view: sale_ly {
-  derived_table: {
-    sql:
-    SELECT ADD_YEARS(datetime 'DATE_CD', -1) as DATE_LY
-    FROM `CDP.FACT_STORE_SALES`;;
+ derived_table: {
+  explore_source: fact_store_sales {
+    # column: customer_cd { field: fact_store_sales.customer_cd }
+    # column: store_cd { field: fact_store_sales.store_cd }
+    column: date_cd { field: fact_store_sales.date_cd }
+    column: sales { field: fact_store_sales.purchase_value_before_tax}
+    # column: avg_sales { field: fact_store_sales.avg_sales }
+    # column: sum_avg_sales { field: fact_store_sales.sum_avg_sales }
   }
-
-  dimension: customer_cd {
-    label: "CUSTOMER_CD"
-    type: string
-    sql: ${TABLE}.CUSTOMER_CD ;;
-  }
-  dimension: date_ly {
-    label: "DATE_LY"
-    type: string
-    sql: ${TABLE}.DATE_LY ;;
-  }
-  dimension: date_cd {
-    label: "DATE_CD"
-    type: string
-    sql: ${TABLE}.DATE_CD ;;
-  }
-
-  dimension: median_diff_date {
-    label: "MEDIAN_DIFF_DATE"
-    type: number
-    sql: ${TABLE}.MEDIAN_DIFF_DATE ;;
-  }
-  measure: purchase_value_before_tax {
-    label: "PURCHASE_VALUE_BEFORE_TAX"
-    type: sum
-    sql: ${TABLE}.PURCHASE_VALUE_BEFORE_TAX ;;
-  }
+}
+dimension: date_cd {
+  label: "DATE_CD"
+  type: date_time
+  sql: ${TABLE}.date_cd ;;
+}
+parameter: base_year {
+  type: unquoted
+}
+measure: sales {
+  label: "SALES"
+  type: number
+  sql: ${TABLE}.sales ;;
+}
 }

@@ -12,26 +12,12 @@ view: dim_date {
     type: time
     timeframes: [time, hour, date, week, month, year, hour_of_day, day_of_week, month_num, raw, week_of_year,month_name]
     sql: TIMESTAMP(${TABLE}.DATE_CD) ;;
-
   }
   dimension: date_year_month {
     label: "DATE_YEAR_MONTH"
     type: date_month
     sql: ${TABLE}.DATE_CD ;;
   }
-  # - dimension: created_year_only
-
-  #   hidden: false
-
-  #   type: int
-
-  #   sql: DATE_PART(year, ${TABLE}.created_date)
-
-
-
-  # - dimension: created_date_only
-
-  #   sql: to_char( ${TABLE}.created_date, 'MM-DD' )
   dimension: previous_year_ce {
     type: number
     sql: ${TABLE}.YEAR_CE-1;;
