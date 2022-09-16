@@ -247,7 +247,6 @@ view: fact_customer_transaction {
       value: "avgBasketSize"
     }
   }
-
   measure: dynamic_measure {
     label_from_parameter: measure_selector
     type: number

@@ -14,9 +14,9 @@ dimension: date_cd {
   type: date_time
   sql: ${TABLE}.date_cd ;;
 }
-parameter: base_year {
-  type: unquoted
-}
+# parameter: base_year {
+#   type: unquoted
+# }
 measure: sales {
   label: "SALES"
   type: number

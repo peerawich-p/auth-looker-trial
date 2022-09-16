@@ -55,7 +55,7 @@ explore: fact_customer {
     sql_on: ${fact_customer.customer_cd} = ${dim_customer.customer_cd} ;;
   }
 }
-
+# explore: te {}
 #fact_customer_transaction
 explore: fact_customer_transaction {
   label: "FACT_CUSTOMER_TRANSACTION"
